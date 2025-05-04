@@ -9,23 +9,31 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t java_application:${BUILD_NUMBER} .'
+                script{
+                    sh 'docker build -t java_application:${BUILD_NUMBER} .'
+                }
             }
         }
         stage("Docker HUB Login"){
             steps{
-                sh 'sudo aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 897722692916.dkr.ecr.ap-south-1.amazonaws.com'
+                script{
+                    sh 'sudo aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 897722692916.dkr.ecr.ap-south-1.amazonaws.com'
+                }
             }
         }
         stage("Tag Docker image"){
             steps{
-                sh 'sudo docker tag java_application:${BUILD_NUMBER} 897722692916.dkr.ecr.ap-south-1.amazonaws.com/java_application:${BUILD_NUMBER}'
+                script{
+                    sh 'sudo docker tag java_application:${BUILD_NUMBER} 897722692916.dkr.ecr.ap-south-1.amazonaws.com/java_application:${BUILD_NUMBER}'
+                }
             }
         }
 
         stage("Push Docker Image"){
             steps{
-                sh 'sudo docker push 897722692916.dkr.ecr.ap-south-1.amazonaws.com/java_application:${BUILD_NUMBER}'
+                script{
+                    sh 'sudo docker push 897722692916.dkr.ecr.ap-south-1.amazonaws.com/java_application:${BUILD_NUMBER}'
+                }
             }
         }
 
