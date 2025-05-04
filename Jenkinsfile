@@ -9,7 +9,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'sudo docker build -t java_application:${BUILD_NUMBER} .'
+                sh 'docker build -t java_application:${BUILD_NUMBER} .'
             }
         }
         stage("Docker HUB Login"){
